@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#eae4da"/>
+  <path d="M130 510c100-20 170-70 230-175l60-105 55 35-35 115c-12 40 15 66 73 83l130 38c52 15 75 49 70 98H130c-20-24-20-61 0-89Z" fill="#20201e"/>
+  <path d="M180 599h505c15 0 28 12 28 28v27H164c-17 0-28-17-21-33l8-17c5-9 16-15 29-15Z" fill="#ff6238"/>
+  <path d="M353 292c35 18 75 42 110 74M319 337c38 18 76 43 111 74M289 385c33 14 69 37 100 67" fill="none" stroke="#f8f5ef" stroke-width="14" stroke-linecap="round"/>
+  <text x="400" y="735" text-anchor="middle" fill="#20201e" font-family="Arial, sans-serif" font-size="30" font-weight="700">SOLEHUB</text>
+</svg>

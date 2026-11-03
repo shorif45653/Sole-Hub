@@ -1,0 +1,4 @@
+import { Link, useLocation } from 'react-router-dom'
+const labels = { '/account/profile': 'Profile', '/account/addresses': 'Addresses', '/account/wishlist': 'Wishlist', '/privacy': 'Privacy Policy', '/refund-policy': 'Refund Policy', '/track-order': 'Track Order', '/refund-exchange': 'Refund & Exchange' }
+const AccountPlaceholder = () => { const { pathname } = useLocation(); const label = labels[pathname] || 'Account'; return <div className="placeholder-page"><div className="container"><div className="placeholder-card"><p className="eyebrow">SOLEHUB ACCOUNT</p><h1>{label}</h1><p>This section is being prepared. Your account is secure and this feature will be available soon.</p><Link to="/account" className="btn btn--primary">Back to Account</Link></div></div></div> }
+export default AccountPlaceholder
