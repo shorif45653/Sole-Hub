@@ -7,10 +7,10 @@ import EmptyState from '../components/EmptyState'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const categories = [
-  { name: 'Lifestyle', description: 'Everyday essentials', image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&h=400&fit=crop' },
-  { name: 'Running', description: 'Built for every mile', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=400&fit=crop' },
-  { name: 'Formal', description: 'Elegant dress shoes', image: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&h=400&fit=crop' },
-  { name: 'Basketball', description: 'Court-ready performance', image: 'https://images.unsplash.com/photo-1577801842755-3a1e9a1d9f27?w=600&h=400&fit=crop' }
+  { name: 'Lifestyle', description: 'Everyday essentials', image: '/images/Air%20Max%20Pulse.jpg' },
+  { name: 'Running', description: 'Built for every mile', image: '/images/WIND%20RAISER%20SHOES.jpg' },
+  { name: 'Formal', description: 'Elegant dress shoes', image: '/images/Hush%20Puppies%20Black.png' },
+  { name: 'Basketball', description: 'Court-ready performance', image: '/images/basketball.jpg' }
 ]
 
 const Home = () => {
