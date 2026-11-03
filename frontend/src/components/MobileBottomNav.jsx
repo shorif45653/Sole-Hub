@@ -22,7 +22,7 @@ const MobileBottomNav = () => {
     { label: 'Cart', path: '/cart', icon: ShoppingBag },
   ]
   const adminLinks = user && isAdmin ? [{ label: 'Dashboard', path: '/admin', icon: LayoutDashboard }] : []
-  const accountLink = user && !isAdmin ? [{ label: 'Account', path: '/account', icon: UserRound }] : []
+  const accountLink = user ? [{ label: 'Account', path: '/account', icon: UserRound }] : [{ label: 'Log In', path: '/login', icon: UserRound }]
   const allLinks = [...customerLinks, ...adminLinks, ...accountLink]
   return <nav className="mobile-bottom-nav" aria-label="Mobile navigation">{allLinks.map(({ label, path, icon: Icon }) => <Link key={label} to={path} className={location.pathname === path || (label === 'Categories' && location.pathname === "/shop") ? 'active' : ''}>
           <span className="mobile-bottom-nav__icon"><Icon size={23} strokeWidth={1.8} />{label === 'Cart' && itemCount > 0 && <b>{itemCount > 99 ? '99+' : itemCount}</b>}</span><span>{label}</span></Link>)}</nav>

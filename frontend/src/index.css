@@ -475,6 +475,8 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
   .desktop-only { display: none !important; }
   .mobile-only { display: inline-flex !important; }
   .navbar__inner { min-height: 64px; }
+  .navbar__logo { display: none !important; }
+  .navbar__menu-btn { display: none !important; }
   .account-page { padding-bottom: 1rem; }
   .account-hero, .account-hero__content { min-height: 340px; }
   .account-panel { width: 100%; margin-top: -1.5rem; border-radius: 18px 18px 0 0; }
