@@ -213,6 +213,33 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .category-card__content h3 { color: white; font-size: 1.7rem; }
 .category-card__content p { color: rgba(255,255,255,.8); }
 
+/* Category card staggered animation - right to left */
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.category-card {
+  animation: slideInRight var(--transition-slow) ease-out forwards;
+  opacity: 0;
+}
+
+.category-card:nth-child(1) { animation-delay: 0.6s; } /* Lifestyle - leftmost, last */
+.category-card:nth-child(2) { animation-delay: 0.4s; } /* Running */
+.category-card:nth-child(3) { animation-delay: 0.2s; } /* Formal */
+.category-card:nth-child(4) { animation-delay: 0s; }   /* Basketball - rightmost, first */
+
+@keyframes slideInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 /* Product cards */
 .product-grid { align-items: start; }
 .product-card { position: relative; min-width: 0; }
@@ -331,7 +358,20 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 }
 @media (max-width: 760px) {
   .desktop-only { display: none !important; }
+
+  /* Mobile: top-to-bottom staggered animation */
+  .category-card {
+    animation: slideInUp 350ms ease-out forwards;
+    opacity: 0;
+  }
+
+  .category-card:nth-child(1) { animation-delay: 0s; }
+  .category-card:nth-child(2) { animation-delay: 0.15s; }
+  .category-card:nth-child(3) { animation-delay: 0.3s; }
+  .category-card:nth-child(4) { animation-delay: 0.45s; }
+
   .mobile-only { display: grid; }
+}
   .hero__container { min-height: auto; grid-template-columns: 1fr; padding-top: 3rem; }
   .hero__image { min-height: 340px; }
   .hero__headline { font-size: clamp(2.6rem, 13vw, 5rem); }
