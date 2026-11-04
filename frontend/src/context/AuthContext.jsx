@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null)
 
   // Fetch user profile
-  const fetchProfile = useCallback(async (userId, fallbackName = 'SoleHub Customer', fallbackPhone = null) => {
+  const fetchProfile = useCallback(async (userId, fallbackName = 'SoleHub Customer', fallbackPhone = null, fallbackEmail = null) => {
     if (!supabase || !isSupabaseConfigured) return
     try {
       const { data, error } = await supabase
@@ -28,7 +28,8 @@ export const AuthProvider = ({ children }) => {
           .upsert({
             id: userId,
             full_name: fallbackName,
-            phone: fallbackPhone
+            phone: fallbackPhone,
+            email: fallbackEmail
           }, { onConflict: 'id' })
           .select()
           .single()
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
           setUser(session.user)
-          await fetchProfile(session.user.id, session.user.user_metadata?.full_name, session.user.user_metadata?.phone)
+          await fetchProfile(session.user.id, session.user.user_metadata?.full_name, session.user.user_metadata?.phone, session.user.email)
         }
       } catch (err) {
         console.error('Auth init error:', err)
@@ -69,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session?.user) {
         setUser(session.user)
-        await fetchProfile(session.user.id, session.user.user_metadata?.full_name, session.user.user_metadata?.phone)
+        await fetchProfile(session.user.id, session.user.user_metadata?.full_name, session.user.user_metadata?.phone, session.user.email)
       } else {
         setUser(null)
         setProfile(null)
@@ -96,7 +97,7 @@ export const AuthProvider = ({ children }) => {
       
       // Profile is created on first fetch (see fetchProfile)
       if (data?.session?.user) {
-        await fetchProfile(data.session.user.id, fullName, phone)
+        await fetchProfile(data.session.user.id, fullName, phone, email)
       }
       return { data, error: null }
     } catch (err) {
@@ -118,7 +119,7 @@ export const AuthProvider = ({ children }) => {
       // Load the role before signIn resolves so callers can route admins correctly.
       if (data?.user) {
         setUser(data.user)
-        await fetchProfile(data.user.id, data.user.user_metadata?.full_name, data.user.user_metadata?.phone)
+        await fetchProfile(data.user.id, data.user.user_metadata?.full_name, data.user.user_metadata?.phone, data.user.email)
       }
       return { data, error: null }
     } catch (err) {
