@@ -213,6 +213,28 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .category-card__content h3 { color: white; font-size: 1.7rem; }
 .category-card__content p { color: rgba(255,255,255,.8); }
 
+/* Category card staggered animation - right to left */
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.category-card {
+  animation: slideInRight var(--transition-slow) ease-out forwards;
+  opacity: 0;
+}
+
+.category-card:nth-child(1) { animation-delay: 0s; }   /* Lifestyle - leftmost */
+.category-card:nth-child(2) { animation-delay: 0.2s; } /* Running */
+.category-card:nth-child(3) { animation-delay: 0.4s; } /* Formal */
+.category-card:nth-child(4) { animation-delay: 0.6s; } /* Basketball - rightmost */
+
 /* Product cards */
 .product-grid { align-items: start; }
 .product-card { position: relative; min-width: 0; }
