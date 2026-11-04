@@ -7,10 +7,10 @@ import EmptyState from '../components/EmptyState'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const categories = [
-  { name: 'Lifestyle', description: 'Everyday essentials', image: '/air jorden.png' },
-  { name: 'Running', description: 'Built for every mile', image: '/images/running_animate.png' },
-  { name: 'Formal', description: 'Elegant dress shoes', image: '/images/formal_animate.png' },
-  { name: 'Basketball', description: 'Court-ready performance', image: '/images/basketball_animate.png' }
+  { name: 'Lifestyle', description: 'Everyday essentials', image: '/images/Air%20Max%20Pulse.jpg' },
+  { name: 'Running', description: 'Built for every mile', image: '/images/WIND%20RAISER%20SHOES.jpg' },
+  { name: 'Formal', description: 'Elegant dress shoes', image: '/images/Hush%20Puppies%20Black.png' },
+  { name: 'Basketball', description: 'Court-ready performance', image: '/images/basketball.jpg' }
 ]
 
 const Home = () => {
