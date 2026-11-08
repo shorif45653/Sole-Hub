@@ -28,15 +28,7 @@ const AdminLayout = () => {
       <aside className={`admin-layout__sidebar ${isSidebarOpen ? 'is-open' : ''}`}>
         <div className="admin-layout__brand">
           <Link to="/admin" className="admin-layout__brand-link">
-            <span className="admin-layout__brand-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="48" fill="currentColor"/>
-                <path d="M30 55 Q25 45 35 38 Q42 32 50 35 Q58 32 65 38 Q75 45 70 55 Q65 60 50 62 Q35 60 30 55" fill="#FF6238"/>
-                <ellipse cx="42" cy="40" rx="4" ry="3" fill="#F8F5EF"/>
-                <ellipse cx="58" cy="40" rx="4" ry="3" fill="#F8F5EF"/>
-              </svg>
-            </span>
-            <span className="admin-layout__brand-text">SoleHub Admin</span>
+            <img src="/images/solehub-logo.png" alt="SoleHub" className="admin-layout__brand-logo" />
           </Link>
         </div>
         
@@ -54,6 +46,10 @@ const AdminLayout = () => {
         </nav>
 
         <div className="admin-layout__bottom">
+          <Link to="/" onClick={() => setIsSidebarOpen(false)} className="admin-layout__nav-item admin-layout__return-link">
+            <ArrowUpRight size={18} />
+            <span>Return to Website</span>
+          </Link>
           <button onClick={handleSignOut} className="admin-layout__nav-item admin-layout__nav-item--danger">
             <LogOut size={18} />
             <span>Sign Out</span>

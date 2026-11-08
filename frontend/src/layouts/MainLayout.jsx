@@ -5,16 +5,18 @@ import MobileBottomNav from '../components/MobileBottomNav'
 
 const MainLayout = () => {
   const location = useLocation()
-  const isLoginPage = location.pathname === '/login'
+  const isAuthSection = location.pathname === '/login'
+    || location.pathname === '/account'
+    || location.pathname.startsWith('/account/')
 
   return (
-    <div className={`main-layout ${isLoginPage ? 'main-layout--auth' : ''}`}>
+    <div className={`main-layout ${isAuthSection ? 'main-layout--auth' : ''}`}>
       <Navbar />
       <main className="main-layout__content">
         <Outlet />
       </main>
-      {!isLoginPage && <Footer />}
-      {!isLoginPage && <MobileBottomNav />}
+      {!isAuthSection && <Footer />}
+      {!isAuthSection && <MobileBottomNav />}
     </div>
   )
 }
