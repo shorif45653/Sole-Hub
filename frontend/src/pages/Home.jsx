@@ -5,6 +5,7 @@ import { getFeaturedProducts } from '../services/productService'
 import ProductCard from '../components/ProductCard'
 import EmptyState from '../components/EmptyState'
 import LoadingSpinner from '../components/LoadingSpinner'
+import HeroCarousel from '../components/HeroCarousel'
 
 const categories = [
   { name: 'Lifestyle', description: 'Everyday essentials', image: '/images/Air%20Max%20Pulse.jpg' },
@@ -50,8 +51,7 @@ const Home = () => {
             <p className="hero__fine-print">*On selected styles. While stocks last.</p>
           </div>
           <div className="hero__image">
-            <div className="hero__decorative-circle" />
-            <img src="/air%20jorden.png" alt="Air Jordan sneaker" className="hero__shoe-image" onError={(event) => { event.currentTarget.src = '/shoe-fallback.svg' }} />
+            <HeroCarousel />
           </div>
         </div>
       </section>
