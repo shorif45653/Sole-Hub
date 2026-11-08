@@ -732,7 +732,8 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .password-toggle { position: absolute; right: .75rem; bottom: .72rem; display: grid; place-items: center; padding: .25rem; color: var(--color-gray); }
 
 @media (max-width: 767px) {
-  body { padding-bottom: 78px; }
+  .main-layout { padding-bottom: 78px; }
+  .main-layout--auth { padding-bottom: 0; }
   .desktop-only { display: none !important; }
   .mobile-only { display: inline-flex !important; }
   .navbar { display: none; }
