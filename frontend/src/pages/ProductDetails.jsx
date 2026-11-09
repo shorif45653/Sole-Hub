@@ -117,7 +117,7 @@ const ProductDetails = () => {
   }
 
   const { original, discounted, hasDiscount, discountPercent } = formatPrice(product.price, product.discount_price)
-  const images = product.images || ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop']
+  const images = (product.images || ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop']).slice(0, 4)
   const isInStock = product.stock > 0 && product.is_active
 
   return (

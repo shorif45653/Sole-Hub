@@ -9,6 +9,7 @@ const CATEGORIES = ['Lifestyle', 'Running', 'Formal', 'Basketball', 'Training']
 const BRANDS = ['Nike', 'Adidas', 'ASICS', 'PUMA']
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+const MAX_IMAGES = 4
 const initialProduct = { name: '', brand: '', category: 'Lifestyle', description: '', price: '', discount_price: '', images: [], sizes: '7, 8, 9, 10, 11', colors: 'White, Black', stock: '10', is_active: true }
 
 const ProductForm = () => {
@@ -16,7 +17,7 @@ const ProductForm = () => {
   const navigate = useNavigate()
   const isEdit = Boolean(id)
   const [product, setProduct] = useState(initialProduct)
-  const [imageFile, setImageFile] = useState(null)
+  const [imageFiles, setImageFiles] = useState([])
   const [loading, setLoading] = useState(isEdit)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
@@ -45,31 +46,40 @@ const ProductForm = () => {
 
   const handleImageFile = file => {
     setError(null)
-    if (!file) return setImageFile(null)
+    if (!file) return
     if (!IMAGE_TYPES.includes(file.type)) return setError('Use a JPG, PNG, or WebP image.')
     if (file.size > MAX_IMAGE_SIZE) return setError('Image must be 5 MB or smaller.')
-    setImageFile(file)
+    if (imageFiles.length >= MAX_IMAGES) return setError(`Maximum ${MAX_IMAGES} images allowed.`)
+    setImageFiles(prev => [...prev, file])
   }
 
   const handleImageChange = event => {
-    handleImageFile(event.target.files?.[0] || null)
+    const files = Array.from(event.target.files || [])
+    files.forEach(handleImageFile)
   }
 
   const handleImageDrop = event => {
     event.preventDefault()
     setIsDraggingImage(false)
-    handleImageFile(event.dataTransfer.files?.[0] || null)
+    const files = Array.from(event.dataTransfer.files || [])
+    files.forEach(handleImageFile)
+  }
+
+  const hasNewImages = imageFiles.length > 0
+
+  const removeImage = index => {
+    setImageFiles(prev => prev.filter((_, i) => i !== index))
   }
 
   useEffect(() => {
     const handlePaste = event => {
-      const imageFile = Array.from(event.clipboardData?.files || []).find(file => IMAGE_TYPES.includes(file.type))
-      if (imageFile) handleImageFile(imageFile)
+      const files = Array.from(event.clipboardData?.files || []).filter(file => IMAGE_TYPES.includes(file.type))
+      files.forEach(handleImageFile)
     }
 
     window.addEventListener('paste', handlePaste)
     return () => window.removeEventListener('paste', handlePaste)
-  }, [])
+  }, [handleImageFile])
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -94,10 +104,11 @@ const ProductForm = () => {
     setSaving(true)
     try {
       let images = product.images || []
-      if (imageFile) {
-        const uploaded = await uploadProductImage(imageFile)
+      for (const file of imageFiles) {
+        const uploaded = await uploadProductImage(file)
         images = [uploaded.url, ...images.filter(image => image !== uploaded.url)]
       }
+      images = images.slice(0, MAX_IMAGES)
       const payload = {
         name,
         brand,
@@ -193,7 +204,7 @@ const ProductForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="image" className="form-label">Product Image</label>
+              <label htmlFor="image" className="form-label">Product Images</label>
               <div
                 className={`form-image-upload ${isDraggingImage ? 'form-image-upload--dragging' : ''}`}
                 onDragOver={event => { event.preventDefault(); setIsDraggingImage(true) }}
@@ -203,13 +214,23 @@ const ProductForm = () => {
                 }}
                 onDrop={handleImageDrop}
               >
-                <input id="image" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageChange} className="form-input form-input--file" />
-                <p className="form-image-upload__drop-hint">Drag and drop an image here, choose a file, or paste an image from your clipboard.</p>
-                <p className="form-hint">JPG, PNG, or WebP up to 5 MB. Existing image URLs are preserved when editing.</p>
-                {imageFile && <p className="form-image-upload__filename">Selected: {imageFile.name}</p>}
-                {product.images?.[0] && (
-                  <img src={product.images[0]} alt="Current product" className="admin-table__thumb form-image-upload__preview" onError={event => { event.currentTarget.src = '/shoe-fallback.svg' }} />
+                <input id="image" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageChange} multiple className="form-input form-input--file" />
+                <p className="form-image-upload__drop-hint">Drag and drop images here, choose files, or paste images from your clipboard (max 4).</p>
+                <p className="form-hint">JPG, PNG, or WebP up to 5 MB each. Existing image URLs are preserved when editing.</p>
+                {hasNewImages && (
+                  <div className="form-image-upload__selected">
+                    {imageFiles.map((file, index) => (
+                      <div key={index} className="form-image-upload__item">
+                        <button type="button" onClick={() => removeImage(index)} className="form-image-upload__remove">×</button>
+                        <span className="form-image-upload__name">{file.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 )}
+                {product.images?.slice(0, MAX_IMAGES).map((img, index) => (
+                  <img key={index} src={img} alt={`Current product image ${index + 1}`} className="admin-table__thumb form-image-upload__preview" onError={event => { event.currentTarget.src = '/shoe-fallback.svg' }} />
+                ))}
+                {hasNewImages && <p className="form-image-upload__count">{imageFiles.length} new image(s) ready to upload</p>}
               </div>
             </div>
 
