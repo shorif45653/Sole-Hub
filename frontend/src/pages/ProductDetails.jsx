@@ -128,26 +128,21 @@ const ProductDetails = () => {
           <Link to="/">Home</Link>
           <span>/</span>
           <Link to="/shop">Shop</Link>
-          <span>/</span>
-          <span>{product.name}</span>
         </nav>
 
         <div className="product-details__grid">
           <div className="product-details__images">
-            <div className="product-details__main-image">
-              <img src={images[activeImage]} alt={product.name} className="product-details__hero-image" />
-              <div className="product-details__image-nav">
-                {images.map((img, index) => (
-                  <button key={index} onClick={() => setActiveImage(index)} className={`product-details__thumbnail ${activeImage === index ? 'active' : ''}`} aria-label={`Image ${index + 1}`}>
-                    <img src={img} alt={`Thumbnail ${index + 1}`} className="product-details__thumbnail-img" />
-                  </button>
-                ))}
-              </div>
-              {hasDiscount && <span className="product-details__sale-badge">-{discountPercent}%</span>}
-              {product.created_at && new Date(product.created_at) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) && (
-                <span className="product-details__new-badge">NEW</span>
-              )}
-            </div>
+            {images.map((img, index) => (
+              <button
+                key={`${img}-${index}`}
+                type="button"
+                onClick={() => setActiveImage(index)}
+                className={`product-details__gallery-item ${activeImage === index ? 'active' : ''}`}
+                aria-label={`View image ${index + 1}`}
+              >
+                <img src={img} alt={`${product.name} view ${index + 1}`} className="product-details__hero-image" />
+              </button>
+            ))}
           </div>
 
           <div className="product-details__info">
