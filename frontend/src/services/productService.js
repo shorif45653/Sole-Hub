@@ -129,7 +129,7 @@ export const getCategories = async () => {
   
   if (error) throw error
   const categoryOrder = ['Lifestyle', 'Running', 'Formal', 'Basketball', 'Training']
-  const categories = [...new Set(data.map(p => p.category))].filter(Boolean).sort((a, b) => {
+  const categories = [...new Set([...categoryOrder, ...data.map(p => p.category)])].filter(Boolean).sort((a, b) => {
     const indexA = categoryOrder.indexOf(a)
     const indexB = categoryOrder.indexOf(b)
     if (indexA === -1 && indexB === -1) return a.localeCompare(b)

@@ -5,7 +5,7 @@ import { isNonNegativeInteger, isValidPrice } from '../../utils/validation'
 import { ArrowLeft, Save, X } from 'lucide-react'
 import LoadingSpinner from '../../components/LoadingSpinner'
 
-const CATEGORIES = ['Lifestyle', 'Running', 'Basketball', 'Training']
+const CATEGORIES = ['Lifestyle', 'Running', 'Formal', 'Basketball', 'Training']
 const BRANDS = ['Nike', 'Adidas', 'ASICS', 'PUMA']
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
