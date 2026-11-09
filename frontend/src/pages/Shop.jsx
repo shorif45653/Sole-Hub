@@ -12,7 +12,7 @@ import { getProducts, getCategories, getBrands } from '../services/productServic
 const DEFAULT_BRANDS = ['Nike', 'Adidas', 'ASICS', 'PUMA']
 
 const Shop = () => {
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [brands, setBrands] = useState([])
@@ -21,6 +21,7 @@ const Shop = () => {
   const [error, setError] = useState(null)
   const [priceRange, setPriceRange] = useState({ min: 0, max: 20000 })
   const [filterOpen, setFilterOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '')
   const { addToCart } = useCart()
 
   const currentPage = parseInt(searchParams.get('page')) || 1
@@ -90,6 +91,19 @@ const Shop = () => {
     loadData()
   }, [searchParams])
 
+  useEffect(() => {
+    setSearchQuery(searchParams.get('search') || '')
+  }, [searchParams])
+
+  const handleSearch = event => {
+    event.preventDefault()
+    const nextParams = new URLSearchParams(searchParams)
+    if (searchQuery.trim()) nextParams.set('search', searchQuery.trim())
+    else nextParams.delete('search')
+    nextParams.delete('page')
+    setSearchParams(nextParams)
+  }
+
   const totalCount = products.length
 
   if (loading) {
@@ -122,10 +136,10 @@ const Shop = () => {
         <div className="container">
           <h1>Shop</h1>
           <p className="shop-subtitle">Find your perfect pair.</p>
-          <div className="shop-search-inline">
-            <input type="text" placeholder="Search shoes..." className="form-input" />
-            <button className="btn btn--primary btn--small">Search</button>
-          </div>
+          <form className="shop-search-inline" onSubmit={handleSearch}>
+            <input type="search" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} placeholder="Search shoes..." className="form-input" aria-label="Search shoes" />
+            <button type="submit" className="btn btn--primary btn--small">Search</button>
+          </form>
           <div className="shop-count">{totalCount} products found</div>
         </div>
       </div>
