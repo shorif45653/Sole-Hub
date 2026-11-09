@@ -1249,6 +1249,25 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
   object-fit: cover;
   background: #f0f3f7;
 }
+.form-image-upload__managed-item {
+  position: relative;
+  display: inline-flex;
+  width: 90px;
+  height: 112px;
+  margin: .75rem .5rem 0 0;
+  padding: .25rem;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  background: var(--color-white);
+  cursor: grab;
+}
+.form-image-upload__managed-item:active { cursor: grabbing; }
+.form-image-upload__managed-item .form-image-upload__preview { margin: 0; width: 78px; height: 78px; }
+.form-image-upload__position { color: var(--color-gray); font-size: .7rem; }
+.form-image-upload__replace { position: absolute; right: 4px; bottom: 3px; padding: 0 .25rem; border-radius: 3px; background: var(--color-charcoal); color: var(--color-white); font-size: .65rem; cursor: pointer; }
+.form-image-upload__replace input { display: none; }
 
 .product-form__actions { display: flex; flex-direction: column; gap: .5rem; }
 .btn--full { width: 100%; justify-content: center; }

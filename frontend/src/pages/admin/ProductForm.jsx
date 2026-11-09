@@ -22,6 +22,8 @@ const ProductForm = () => {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
   const [isDraggingImage, setIsDraggingImage] = useState(false)
+  const [imageReplacements, setImageReplacements] = useState({})
+  const [draggedImageIndex, setDraggedImageIndex] = useState(null)
 
   useEffect(() => {
     if (!id) return
@@ -71,6 +73,53 @@ const ProductForm = () => {
     setImageFiles(prev => prev.filter((_, i) => i !== index))
   }
 
+  const removeExistingImage = index => {
+    setProduct(current => ({ ...current, images: current.images.filter((_, imageIndex) => imageIndex !== index) }))
+    setImageReplacements(current => {
+      const next = { ...current }
+      Object.keys(next).forEach(key => {
+        const imageIndex = Number(key)
+        delete next[key]
+        if (imageIndex > index) next[imageIndex - 1] = current[key]
+        else if (imageIndex < index) next[imageIndex] = current[key]
+      })
+      return next
+    })
+  }
+
+  const replaceExistingImage = (index, file) => {
+    if (!file) return
+    setError(null)
+    if (!IMAGE_TYPES.includes(file.type)) return setError('Use a JPG, PNG, or WebP image.')
+    if (file.size > MAX_IMAGE_SIZE) return setError('Image must be 5 MB or smaller.')
+    setImageReplacements(current => ({ ...current, [index]: file }))
+  }
+
+  const moveExistingImage = (fromIndex, toIndex) => {
+    if (fromIndex === toIndex || toIndex < 0 || toIndex >= product.images.length) return
+    setProduct(current => {
+      const images = [...current.images]
+      const [movedImage] = images.splice(fromIndex, 1)
+      images.splice(toIndex, 0, movedImage)
+      return { ...current, images }
+    })
+    setImageReplacements(current => {
+      const next = {}
+      Object.entries(current).forEach(([key, file]) => {
+        const index = Number(key)
+        const adjustedIndex = index === fromIndex
+          ? toIndex
+          : fromIndex < toIndex && index > fromIndex && index <= toIndex
+            ? index - 1
+            : fromIndex > toIndex && index >= toIndex && index < fromIndex
+              ? index + 1
+              : index
+        next[adjustedIndex] = file
+      })
+      return next
+    })
+  }
+
   useEffect(() => {
     const handlePaste = event => {
       const files = Array.from(event.clipboardData?.files || []).filter(file => IMAGE_TYPES.includes(file.type))
@@ -104,9 +153,13 @@ const ProductForm = () => {
     setSaving(true)
     try {
       let images = product.images || []
+      for (const [index, file] of Object.entries(imageReplacements)) {
+        const uploaded = await uploadProductImage(file)
+        images[Number(index)] = uploaded.url
+      }
       for (const file of imageFiles) {
         const uploaded = await uploadProductImage(file)
-        images = [uploaded.url, ...images.filter(image => image !== uploaded.url)]
+        images.push(uploaded.url)
       }
       images = images.slice(0, MAX_IMAGES)
       const payload = {
@@ -227,9 +280,31 @@ const ProductForm = () => {
                     ))}
                   </div>
                 )}
-                {product.images?.slice(0, MAX_IMAGES).map((img, index) => (
-                  <img key={index} src={img} alt={`Current product image ${index + 1}`} className="admin-table__thumb form-image-upload__preview" onError={event => { event.currentTarget.src = '/shoe-fallback.svg' }} />
-                ))}
+                {product.images?.slice(0, MAX_IMAGES).map((img, index) => {
+                  const replacementPreview = imageReplacements[index] ? window.URL.createObjectURL(imageReplacements[index]) : img
+                  return (
+                    <div
+                      key={`${img}-${index}`}
+                      className="form-image-upload__managed-item"
+                      draggable
+                      onDragStart={() => setDraggedImageIndex(index)}
+                      onDragEnd={() => setDraggedImageIndex(null)}
+                      onDragOver={event => event.preventDefault()}
+                      onDrop={() => {
+                        if (draggedImageIndex !== null) moveExistingImage(draggedImageIndex, index)
+                        setDraggedImageIndex(null)
+                      }}
+                    >
+                      <img src={replacementPreview} alt={`Product image ${index + 1}`} className="form-image-upload__preview" onError={event => { event.currentTarget.src = '/shoe-fallback.svg' }} />
+                      <span className="form-image-upload__position">{index + 1}</span>
+                      <button type="button" onClick={() => removeExistingImage(index)} className="form-image-upload__remove" aria-label={`Remove image ${index + 1}`}>×</button>
+                      <label className="form-image-upload__replace" title={`Replace image ${index + 1}`}>
+                        Edit
+                        <input type="file" accept="image/jpeg,image/png,image/webp" onChange={event => replaceExistingImage(index, event.target.files?.[0])} />
+                      </label>
+                    </div>
+                  )
+                })}
                 {hasNewImages && <p className="form-image-upload__count">{imageFiles.length} new image(s) ready to upload</p>}
               </div>
             </div>
