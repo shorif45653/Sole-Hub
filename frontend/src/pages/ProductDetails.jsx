@@ -132,17 +132,22 @@ const ProductDetails = () => {
 
         <div className="product-details__grid">
           <div className="product-details__images">
-            {images.map((img, index) => (
-              <button
-                key={`${img}-${index}`}
-                type="button"
-                onClick={() => setActiveImage(index)}
-                className={`product-details__gallery-item ${activeImage === index ? 'active' : ''}`}
-                aria-label={`View image ${index + 1}`}
-              >
-                <img src={img} alt={`${product.name} view ${index + 1}`} className="product-details__hero-image" />
-              </button>
-            ))}
+            <div className="product-details__thumbnail-list">
+              {images.map((img, index) => (
+                <button
+                  key={`${img}-${index}`}
+                  type="button"
+                  onClick={() => setActiveImage(index)}
+                  className={`product-details__thumbnail ${activeImage === index ? 'active' : ''}`}
+                  aria-label={`View image ${index + 1}`}
+                >
+                  <img src={img} alt={`${product.name} thumbnail ${index + 1}`} />
+                </button>
+              ))}
+            </div>
+            <div className="product-details__main-image">
+              <img src={images[activeImage]} alt={`${product.name} selected view`} className="product-details__hero-image" />
+            </div>
           </div>
 
           <div className="product-details__info">
