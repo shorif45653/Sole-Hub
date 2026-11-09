@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { createProductAdmin, getProductByIdAdmin, updateProductAdmin, uploadProductImage } from '../../services/adminService'
 import { isNonNegativeInteger, isValidPrice } from '../../utils/validation'
@@ -20,6 +20,7 @@ const ProductForm = () => {
   const [loading, setLoading] = useState(isEdit)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
+  const [isDraggingImage, setIsDraggingImage] = useState(false)
 
   useEffect(() => {
     if (!id) return
@@ -42,14 +43,33 @@ const ProductForm = () => {
     setProduct(current => ({ ...current, [name]: type === 'checkbox' ? checked : value }))
   }
 
-  const handleImageChange = event => {
-    const file = event.target.files?.[0] || null
+  const handleImageFile = file => {
     setError(null)
     if (!file) return setImageFile(null)
     if (!IMAGE_TYPES.includes(file.type)) return setError('Use a JPG, PNG, or WebP image.')
     if (file.size > MAX_IMAGE_SIZE) return setError('Image must be 5 MB or smaller.')
     setImageFile(file)
   }
+
+  const handleImageChange = event => {
+    handleImageFile(event.target.files?.[0] || null)
+  }
+
+  const handleImageDrop = event => {
+    event.preventDefault()
+    setIsDraggingImage(false)
+    handleImageFile(event.dataTransfer.files?.[0] || null)
+  }
+
+  useEffect(() => {
+    const handlePaste = event => {
+      const imageFile = Array.from(event.clipboardData?.files || []).find(file => IMAGE_TYPES.includes(file.type))
+      if (imageFile) handleImageFile(imageFile)
+    }
+
+    window.addEventListener('paste', handlePaste)
+    return () => window.removeEventListener('paste', handlePaste)
+  }, [])
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -174,9 +194,19 @@ const ProductForm = () => {
 
             <div className="form-group">
               <label htmlFor="image" className="form-label">Product Image</label>
-              <div className="form-image-upload">
+              <div
+                className={`form-image-upload ${isDraggingImage ? 'form-image-upload--dragging' : ''}`}
+                onDragOver={event => { event.preventDefault(); setIsDraggingImage(true) }}
+                onDragEnter={event => { event.preventDefault(); setIsDraggingImage(true) }}
+                onDragLeave={event => {
+                  if (!event.currentTarget.contains(event.relatedTarget)) setIsDraggingImage(false)
+                }}
+                onDrop={handleImageDrop}
+              >
                 <input id="image" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImageChange} className="form-input form-input--file" />
+                <p className="form-image-upload__drop-hint">Drag and drop an image here, choose a file, or paste an image from your clipboard.</p>
                 <p className="form-hint">JPG, PNG, or WebP up to 5 MB. Existing image URLs are preserved when editing.</p>
+                {imageFile && <p className="form-image-upload__filename">Selected: {imageFile.name}</p>}
                 {product.images?.[0] && (
                   <img src={product.images[0]} alt="Current product" className="admin-table__thumb form-image-upload__preview" onError={event => { event.currentTarget.src = '/shoe-fallback.svg' }} />
                 )}

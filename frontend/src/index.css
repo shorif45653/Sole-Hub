@@ -1092,7 +1092,34 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
   font-weight: 500;
 }
 
-.form-image-upload { position: relative; }
+.form-image-upload {
+  position: relative;
+  padding: .65rem;
+  border: 1px dashed #b9c4d2;
+  border-radius: 10px;
+  background: #fbfcfe;
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+}
+.form-image-upload:focus-within,
+.form-image-upload--dragging {
+  border-color: var(--color-orange);
+  background: #fff7f3;
+  box-shadow: 0 0 0 3px rgba(255, 98, 56, .12);
+}
+.form-image-upload__drop-hint {
+  margin: .55rem 0 .25rem;
+  color: #526176;
+  font-size: .8rem;
+}
+.form-image-upload__filename {
+  margin-top: .35rem;
+  overflow: hidden;
+  color: #18212b;
+  font-size: .78rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .form-image-upload__preview {
   margin-top: .75rem;
   width: 64px;
