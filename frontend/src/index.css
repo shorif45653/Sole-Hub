@@ -547,8 +547,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .auth-footer__link { color: var(--color-orange); font-weight: 600; }
 
 /* Shop and filters */
-.shop-header { padding: 3rem 0; background: var(--color-charcoal); color: var(--color-cream); }
-.shop-header { padding: 3.25rem 0 3.5rem; }
+.shop-header { position: relative; padding: 3.25rem 0 3.5rem; color: var(--color-cream); background: linear-gradient(90deg, rgba(32,32,30,.9), rgba(32,32,30,.58)), url('/images/shop%20thum.png') center/cover no-repeat; }
 .shop-header h1 { margin: 0; color: var(--color-cream); font-size: clamp(3.5rem, 7vw, 5.5rem); letter-spacing: -.05em; }
 .shop-subtitle { margin-top: .35rem; color: rgba(248,245,239,.78); font-size: 1.1rem; }
 .shop-search-inline { display: flex; max-width: 700px; gap: .65rem; margin-top: 1.5rem; }
