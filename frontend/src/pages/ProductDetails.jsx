@@ -116,7 +116,7 @@ const ProductDetails = () => {
     )
   }
 
-  const { original, discounted, hasDiscount, discountPercent } = formatPrice(product.price, product.discount_price)
+  const { original, discounted, hasDiscount, savings, discountPercent } = formatPrice(product.price, product.discount_price)
   const baseImages = product.images && product.images.length > 0 ? product.images : ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop']
   const images = Array.from({ length: 4 }, (_, i) => baseImages[i % baseImages.length])
   const isInStock = product.stock > 0 && product.is_active
@@ -157,7 +157,12 @@ const ProductDetails = () => {
 
             <div className="product-details__pricing">
               <span className="product-details__current-price">{discounted || original}</span>
-              {hasDiscount && <span className="product-details__original-price">{original}</span>}
+              {hasDiscount && (
+                <>
+                  <span className="product-details__original-price">{original}</span>
+                  <span className="product-details__discount">Save {savings} ({discountPercent}% off)</span>
+                </>
+              )}
               <span className={`product-details__stock ${isInStock ? 'in-stock' : 'out-of-stock'}`}>
                 {isInStock ? `In Stock (${product.stock} available)` : 'Out of Stock'}
               </span>
