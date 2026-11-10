@@ -547,11 +547,8 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .auth-footer__link { color: var(--color-orange); font-weight: 600; }
 
 /* Addresses */
-.addresses-header,
-.addresses-management__header { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
+.addresses-header { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
 .addresses-management { margin-top: 2rem; }
-.addresses-management__header { align-items: center; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-gray-light); }
-.addresses-management__header h2 { margin: .3rem 0 .2rem; font-size: clamp(1.6rem, 3vw, 2.3rem); }
 .address-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .address-card { padding: 1.25rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius-md); background: var(--color-white); }
 .address-card--default { border-color: var(--color-orange); box-shadow: 0 0 0 2px rgba(255,98,56,.1); }
@@ -720,8 +717,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
   .cart-item__controls { width: 100%; justify-content: flex-end; }
   .footer__grid { grid-template-columns: 1fr; }
   .footer__brand, .footer__newsletter { grid-column: span 1; }
-  .addresses-header, .addresses-management__header { align-items: flex-start; flex-direction: column; }
-  .addresses-management__header .btn { width: 100%; }
+  .addresses-header { align-items: flex-start; flex-direction: column; }
   .address-list { grid-template-columns: 1fr; }
 }
 

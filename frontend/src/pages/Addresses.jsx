@@ -216,7 +216,6 @@ const Addresses = () => {
             <div>
               <p className="eyebrow">SOLEHUB ACCOUNT</p>
               <h1>Addresses</h1>
-              <p className="text-gray">Manage the delivery addresses for your SoleHub orders.</p>
             </div>
           </div>
 
@@ -317,15 +316,6 @@ const Addresses = () => {
             </div>
           ) : (
             <div className="addresses-management">
-              {!showForm && (
-                <div className="addresses-management__header">
-                  <div>
-                    <p className="eyebrow">SAVED ADDRESSES</p>
-                    <h2>Manage Addresses</h2>
-                    <p className="text-gray">Edit your saved address or add another delivery address.</p>
-                  </div>
-                </div>
-              )}
               <div className="address-list">
                 {addresses.map(address => (
                   <article key={address.id} className={`address-card ${address.is_default ? 'address-card--default' : ''}`}>
