@@ -218,7 +218,7 @@ const Addresses = () => {
               <h1>Addresses</h1>
               <p className="text-gray">Manage the delivery addresses for your SoleHub orders.</p>
             </div>
-            {!showForm && (
+            {!showForm && addresses.length > 0 && (
               <button type="button" className="btn btn--primary" onClick={startAdd}>
                 <Plus size={18} /> Add Address
               </button>
