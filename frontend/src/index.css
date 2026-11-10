@@ -555,7 +555,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .address-list { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 .address-card { position: relative; padding: 1.25rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius-md); background: var(--color-white); }
 .address-card--default { border-color: var(--color-orange); box-shadow: 0 0 0 2px rgba(255,98,56,.1); }
-.address-card__top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .9rem; }
+.address-card__top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-right: 2.25rem; margin-bottom: .9rem; }
 .address-card__label,
 .address-card__badge { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; }
 .address-card__badge { color: var(--color-orange); font-size: .78rem; }
