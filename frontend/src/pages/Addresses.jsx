@@ -317,6 +317,11 @@ const Addresses = () => {
             </div>
           ) : (
             <div className="addresses-management">
+              <h2 className="addresses-management__title">Manage Addresses</h2>
+              <button type="button" className="address-add-row" onClick={startAdd}>
+                <Plus size={22} />
+                <span>ADD A NEW ADDRESS</span>
+              </button>
               <div className="address-list">
                 {addresses.map(address => (
                   <article key={address.id} className={`address-card ${address.is_default ? 'address-card--default' : ''}`}>

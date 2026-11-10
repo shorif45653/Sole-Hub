@@ -549,7 +549,10 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 /* Addresses */
 .addresses-header { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
 .addresses-management { margin-top: 2rem; }
-.address-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.addresses-management__title { margin-bottom: 1.25rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+.address-add-row { display: flex; align-items: center; gap: 1rem; width: 100%; min-height: 68px; margin-bottom: 2.25rem; padding: 1rem 1.25rem; border: 1px solid #d9d9d9; color: #236dff; background: var(--color-white); text-align: left; font-size: 1rem; font-weight: 600; }
+.address-add-row:hover { border-color: #236dff; background: #f8fbff; }
+.address-list { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 .address-card { position: relative; padding: 1.25rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius-md); background: var(--color-white); }
 .address-card--default { border-color: var(--color-orange); box-shadow: 0 0 0 2px rgba(255,98,56,.1); }
 .address-card__top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .9rem; }
@@ -721,7 +724,6 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
   .footer__grid { grid-template-columns: 1fr; }
   .footer__brand, .footer__newsletter { grid-column: span 1; }
   .addresses-header { align-items: flex-start; flex-direction: column; }
-  .address-list { grid-template-columns: 1fr; }
 }
 
 
