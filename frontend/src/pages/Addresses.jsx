@@ -218,11 +218,6 @@ const Addresses = () => {
               <h1>Addresses</h1>
               <p className="text-gray">Manage the delivery addresses for your SoleHub orders.</p>
             </div>
-            {!showForm && addresses.length > 0 && (
-              <button type="button" className="btn btn--primary" onClick={startAdd}>
-                <Plus size={18} /> Add Address
-              </button>
-            )}
           </div>
 
           {error && <div className="auth-error" role="alert">{error}</div>}
@@ -329,9 +324,6 @@ const Addresses = () => {
                     <h2>Manage Addresses</h2>
                     <p className="text-gray">Edit your saved address or add another delivery address.</p>
                   </div>
-                  <button type="button" className="btn btn--primary" onClick={startAdd}>
-                    <Plus size={18} /> Add Another Address
-                  </button>
                 </div>
               )}
               <div className="address-list">
@@ -362,6 +354,9 @@ const Addresses = () => {
                       </button>
                       <button type="button" className="address-action address-action--danger" onClick={() => handleDelete(address.id)}>
                         <Trash2 size={16} /> Delete
+                      </button>
+                      <button type="button" className="address-action address-action--add" onClick={startAdd}>
+                        <Plus size={16} /> Add Another Address
                       </button>
                     </div>
                   </article>

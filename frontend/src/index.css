@@ -567,6 +567,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .address-action { display: inline-flex; align-items: center; gap: .3rem; color: var(--color-charcoal); font-size: .85rem; font-weight: 600; }
 .address-action:hover { color: var(--color-orange); }
 .address-action--danger { color: #b42318; }
+.address-action--add { color: var(--color-orange); }
 .addresses-empty { padding: 3rem 1rem; text-align: center; }
 .addresses-empty h2 { margin: .8rem 0 .35rem; font-size: clamp(2rem, 4vw, 3rem); }
 .addresses-empty .btn { margin-top: 1rem; }
