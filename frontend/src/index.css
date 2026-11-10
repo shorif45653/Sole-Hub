@@ -550,7 +550,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .addresses-header { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
 .addresses-management { margin-top: 2rem; }
 .address-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.address-card { padding: 1.25rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius-md); background: var(--color-white); }
+.address-card { position: relative; padding: 1.25rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius-md); background: var(--color-white); }
 .address-card--default { border-color: var(--color-orange); box-shadow: 0 0 0 2px rgba(255,98,56,.1); }
 .address-card__top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .9rem; }
 .address-card__label,
@@ -560,11 +560,14 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .address-card__lines,
 .address-card__phone { color: var(--color-gray); line-height: 1.55; }
 .address-card__phone { margin-top: .5rem; font-size: .9rem; }
-.address-card__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.1rem; padding-top: .85rem; border-top: 1px solid var(--color-gray-light); }
-.address-action { display: inline-flex; align-items: center; gap: .3rem; color: var(--color-charcoal); font-size: .85rem; font-weight: 600; }
-.address-action:hover { color: var(--color-orange); }
-.address-action--danger { color: #b42318; }
-.address-action--add { color: var(--color-orange); }
+.address-card__menu { position: absolute; top: 1rem; right: 1rem; }
+.address-card__menu-button { display: grid; place-items: center; padding: .2rem; color: var(--color-gray); border-radius: 4px; }
+.address-card__menu-button:hover,
+.address-card__menu-button[aria-expanded="true"] { color: var(--color-charcoal); background: var(--color-gray-light); }
+.address-card__menu-list { position: absolute; z-index: 3; top: calc(100% + .35rem); right: 0; min-width: 145px; padding: .35rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius-sm); background: var(--color-white); box-shadow: var(--shadow-md); }
+.address-card__menu-list button { display: flex; align-items: center; gap: .5rem; width: 100%; padding: .55rem .65rem; color: var(--color-charcoal); border-radius: 4px; text-align: left; font-size: .85rem; }
+.address-card__menu-list button:hover { background: var(--color-gray-light); }
+.address-card__menu-list .address-card__menu-item--danger { color: #b42318; }
 .addresses-empty { padding: 3rem 1rem; text-align: center; }
 .addresses-empty h2 { margin: .8rem 0 .35rem; font-size: clamp(2rem, 4vw, 3rem); }
 .addresses-empty .btn { margin-top: 1rem; }

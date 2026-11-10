@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MapPin, Pencil, Plus, Star, Trash2, X } from 'lucide-react'
+import { MapPin, MoreVertical, Pencil, Plus, Star, Trash2, X } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import {
   getAddresses,
@@ -42,6 +42,7 @@ const Addresses = () => {
   const [status, setStatus] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState(null)
+  const [openMenuId, setOpenMenuId] = useState(null)
   const [form, setForm] = useState(emptyForm)
   const [saving, setSaving] = useState(false)
 
@@ -319,6 +320,32 @@ const Addresses = () => {
               <div className="address-list">
                 {addresses.map(address => (
                   <article key={address.id} className={`address-card ${address.is_default ? 'address-card--default' : ''}`}>
+                    <div className="address-card__menu">
+                      <button
+                        type="button"
+                        className="address-card__menu-button"
+                        onClick={() => setOpenMenuId(openMenuId === address.id ? null : address.id)}
+                        aria-label={`Actions for ${address.label || 'address'}`}
+                        aria-expanded={openMenuId === address.id}
+                      >
+                        <MoreVertical size={20} />
+                      </button>
+                      {openMenuId === address.id && (
+                        <div className="address-card__menu-list">
+                          {!address.is_default && (
+                            <button type="button" onClick={() => { handleSetDefault(address.id); setOpenMenuId(null) }}>
+                              <Star size={15} /> Set Default
+                            </button>
+                          )}
+                          <button type="button" onClick={() => { startEdit(address); setOpenMenuId(null) }}>
+                            <Pencil size={15} /> Edit
+                          </button>
+                          <button type="button" className="address-card__menu-item--danger" onClick={() => { handleDelete(address.id); setOpenMenuId(null) }}>
+                            <Trash2 size={15} /> Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                     <div className="address-card__top">
                       <span className="address-card__label">
                         <MapPin size={16} strokeWidth={1.8} /> {address.label || 'Address'}
@@ -333,22 +360,6 @@ const Addresses = () => {
                       {address.country}
                     </p>
                     {address.phone && <p className="address-card__phone">+91 {address.phone.replace('+91', '')}</p>}
-                    <div className="address-card__actions">
-                      {!address.is_default && (
-                        <button type="button" className="address-action" onClick={() => handleSetDefault(address.id)}>
-                          <Star size={16} /> Set Default
-                        </button>
-                      )}
-                      <button type="button" className="address-action" onClick={() => startEdit(address)}>
-                        <Pencil size={16} /> Edit
-                      </button>
-                      <button type="button" className="address-action address-action--danger" onClick={() => handleDelete(address.id)}>
-                        <Trash2 size={16} /> Delete
-                      </button>
-                      <button type="button" className="address-action address-action--add" onClick={startAdd}>
-                        <Plus size={16} /> Add Another Address
-                      </button>
-                    </div>
                   </article>
                 ))}
               </div>
