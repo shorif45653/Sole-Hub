@@ -30,8 +30,11 @@ const Home = () => {
   }, [])
 
   const handleQuickAdd = async product => {
-    if (!product.sizes?.[0]) return
-    await addToCart(product.id, product.sizes[0], product.colors?.[0] || null, 1, product)
+    const size = Array.isArray(product.sizes) && product.sizes.length > 0
+      ? product.sizes[0]
+      : 7
+    const color = Array.isArray(product.colors) ? product.colors[0] || null : null
+    await addToCart(product.id, size, color, 1, product)
   }
 
   if (loading) return <div className="homepage loading-page"><div className="empty-state"><LoadingSpinner size="lg" text="Loading homepage..." /></div></div>

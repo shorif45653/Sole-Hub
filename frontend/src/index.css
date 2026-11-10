@@ -485,7 +485,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .product-card__badges { position: absolute; top: .75rem; left: .75rem; display: flex; gap: .35rem; }
 .badge, .product-card__sale-badge { padding: .25rem .45rem; background: var(--color-charcoal); color: white; font-size: .68rem; font-weight: 700; letter-spacing: .06em; }
 .product-card__sale-badge { position: absolute; top: .75rem; right: .75rem; background: var(--color-orange); }
-.product-card__quick-add { position: absolute; right: .75rem; bottom: 4.25rem; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--color-orange); color: white; opacity: 0; transform: translateY(6px); transition: opacity var(--transition-base), transform var(--transition-base); }
+.product-card__quick-add { position: absolute; z-index: 2; right: .75rem; bottom: 4.25rem; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--color-orange); color: white; cursor: pointer; opacity: 0; transform: translateY(6px); transition: opacity var(--transition-base), transform var(--transition-base); }
 .product-card:hover .product-card__quick-add { opacity: 1; transform: translateY(0); }
 .product-card__actions { display: flex; align-items: center; gap: .5rem; margin-top: .75rem; }
 .product-card__add-btn { flex: 1; }
