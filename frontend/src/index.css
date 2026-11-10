@@ -546,6 +546,31 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .auth-footer { margin-top: 1.5rem; text-align: center; color: var(--color-gray); }
 .auth-footer__link { color: var(--color-orange); font-weight: 600; }
 
+/* Addresses */
+.addresses-header,
+.addresses-management__header { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
+.addresses-management { margin-top: 2rem; }
+.addresses-management__header { align-items: center; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-gray-light); }
+.addresses-management__header h2 { margin: .3rem 0 .2rem; font-size: clamp(1.6rem, 3vw, 2.3rem); }
+.address-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.address-card { padding: 1.25rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius-md); background: var(--color-white); }
+.address-card--default { border-color: var(--color-orange); box-shadow: 0 0 0 2px rgba(255,98,56,.1); }
+.address-card__top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .9rem; }
+.address-card__label,
+.address-card__badge { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; }
+.address-card__badge { color: var(--color-orange); font-size: .78rem; }
+.address-card__name { margin-bottom: .4rem; font-weight: 700; }
+.address-card__lines,
+.address-card__phone { color: var(--color-gray); line-height: 1.55; }
+.address-card__phone { margin-top: .5rem; font-size: .9rem; }
+.address-card__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.1rem; padding-top: .85rem; border-top: 1px solid var(--color-gray-light); }
+.address-action { display: inline-flex; align-items: center; gap: .3rem; color: var(--color-charcoal); font-size: .85rem; font-weight: 600; }
+.address-action:hover { color: var(--color-orange); }
+.address-action--danger { color: #b42318; }
+.addresses-empty { padding: 3rem 1rem; text-align: center; }
+.addresses-empty h2 { margin: .8rem 0 .35rem; font-size: clamp(2rem, 4vw, 3rem); }
+.addresses-empty .btn { margin-top: 1rem; }
+
 /* Shop and filters */
 .shop-header { position: relative; padding: 3.25rem 0 3.5rem; color: var(--color-cream); background: linear-gradient(90deg, rgba(32,32,30,.9), rgba(32,32,30,.58)), url('/images/shop%20thum.png') center/cover no-repeat; }
 .shop-header h1 { margin: 0; color: var(--color-cream); font-size: clamp(3.5rem, 7vw, 5.5rem); letter-spacing: -.05em; }
@@ -694,6 +719,9 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
   .cart-item__controls { width: 100%; justify-content: flex-end; }
   .footer__grid { grid-template-columns: 1fr; }
   .footer__brand, .footer__newsletter { grid-column: span 1; }
+  .addresses-header, .addresses-management__header { align-items: flex-start; flex-direction: column; }
+  .addresses-management__header .btn { width: 100%; }
+  .address-list { grid-template-columns: 1fr; }
 }
 
 

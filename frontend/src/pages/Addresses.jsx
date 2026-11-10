@@ -321,38 +321,52 @@ const Addresses = () => {
               </button>
             </div>
           ) : (
-            <div className="address-list">
-              {addresses.map(address => (
-                <article key={address.id} className={`address-card ${address.is_default ? 'address-card--default' : ''}`}>
-                  <div className="address-card__top">
-                    <span className="address-card__label">
-                      <MapPin size={16} strokeWidth={1.8} /> {address.label || 'Address'}
-                    </span>
-                    {address.is_default && <span className="address-card__badge"><Star size={14} /> Default</span>}
+            <div className="addresses-management">
+              {!showForm && (
+                <div className="addresses-management__header">
+                  <div>
+                    <p className="eyebrow">SAVED ADDRESSES</p>
+                    <h2>Manage Addresses</h2>
+                    <p className="text-gray">Edit your saved address or add another delivery address.</p>
                   </div>
-                  <p className="address-card__name">{address.full_name}</p>
-                  <p className="address-card__lines">
-                    {address.address_line1}
-                    {address.address_line2 ? `, ${address.address_line2}` : ''}<br />
-                    {address.city}, {address.state} - {address.postal_code}<br />
-                    {address.country}
-                  </p>
-                  {address.phone && <p className="address-card__phone">+91 {address.phone.replace('+91', '')}</p>}
-                  <div className="address-card__actions">
-                    {!address.is_default && (
-                      <button type="button" className="address-action" onClick={() => handleSetDefault(address.id)}>
-                        <Star size={16} /> Set Default
+                  <button type="button" className="btn btn--primary" onClick={startAdd}>
+                    <Plus size={18} /> Add Another Address
+                  </button>
+                </div>
+              )}
+              <div className="address-list">
+                {addresses.map(address => (
+                  <article key={address.id} className={`address-card ${address.is_default ? 'address-card--default' : ''}`}>
+                    <div className="address-card__top">
+                      <span className="address-card__label">
+                        <MapPin size={16} strokeWidth={1.8} /> {address.label || 'Address'}
+                      </span>
+                      {address.is_default && <span className="address-card__badge"><Star size={14} /> Default</span>}
+                    </div>
+                    <p className="address-card__name">{address.full_name}</p>
+                    <p className="address-card__lines">
+                      {address.address_line1}
+                      {address.address_line2 ? `, ${address.address_line2}` : ''}<br />
+                      {address.city}, {address.state} - {address.postal_code}<br />
+                      {address.country}
+                    </p>
+                    {address.phone && <p className="address-card__phone">+91 {address.phone.replace('+91', '')}</p>}
+                    <div className="address-card__actions">
+                      {!address.is_default && (
+                        <button type="button" className="address-action" onClick={() => handleSetDefault(address.id)}>
+                          <Star size={16} /> Set Default
+                        </button>
+                      )}
+                      <button type="button" className="address-action" onClick={() => startEdit(address)}>
+                        <Pencil size={16} /> Edit
                       </button>
-                    )}
-                    <button type="button" className="address-action" onClick={() => startEdit(address)}>
-                      <Pencil size={16} /> Edit
-                    </button>
-                    <button type="button" className="address-action address-action--danger" onClick={() => handleDelete(address.id)}>
-                      <Trash2 size={16} /> Delete
-                    </button>
-                  </div>
-                </article>
-              ))}
+                      <button type="button" className="address-action address-action--danger" onClick={() => handleDelete(address.id)}>
+                        <Trash2 size={16} /> Delete
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
           )}
         </div>
