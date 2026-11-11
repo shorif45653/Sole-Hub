@@ -6,7 +6,6 @@ import ProductCard from '../components/ProductCard'
 import EmptyState from '../components/EmptyState'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorMessage from '../components/ErrorMessage'
-import { formatPrice } from '../utils/formatCurrency'
 import { getProducts, getCategories, getBrands } from '../services/productService'
 
 const DEFAULT_BRANDS = ['Nike', 'Adidas', 'ASICS', 'PUMA']
@@ -164,6 +163,16 @@ const Shop = () => {
             />
           </aside>
 
+            <FilterPanel
+              categories={categories}
+              brands={brands}
+              priceRange={priceRange}
+              sizes={sizes}
+              isOpen={filterOpen}
+              onClose={() => setFilterOpen(false)}
+              className="mobile-only"
+            />
+
           <div className="shop-product-area">
             <div className="shop-results-header">
               <span className="shop-results-count">{totalCount} results</span>
@@ -181,8 +190,6 @@ const Shop = () => {
             {!loading && !error && products.length > 0 ? (
               <div className="product-grid grid grid--4">
                 {products.map(product => {
-                  const { original, discounted, hasDiscount, discountPercent } = formatPrice(product.price, product.discount_price)
-                  const isNew = product.created_at && new Date(product.created_at) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
                   return <ProductCard key={product.id} product={product} variant="default" onQuickAdd={handleQuickAdd} />
                 })}
               </div>

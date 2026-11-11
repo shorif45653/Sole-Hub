@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../services/supabase'
 import { formatCurrency } from '../utils/formatCurrency'
@@ -9,7 +9,6 @@ import LoadingSpinner from '../components/LoadingSpinner'
 const OrderDetails = () => {
   const { id } = useParams()
   const { user } = useAuth()
-  const navigate = useNavigate()
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)

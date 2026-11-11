@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, X, SlidersHorizontal } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 const FilterPanel = ({ 

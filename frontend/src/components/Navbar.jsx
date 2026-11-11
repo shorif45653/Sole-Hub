@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 const Navbar = () => {
   const location = useLocation()
-  const { user, signOut, isAdmin } = useAuth()
+  const { user, isAdmin } = useAuth()
   const { getCartTotals } = useCart()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)

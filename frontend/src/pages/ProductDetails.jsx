@@ -4,7 +4,6 @@ import { useCart } from '../context/CartContext'
 import { supabase } from '../services/supabase'
 import { formatPrice } from '../utils/formatCurrency'
 import LoadingSpinner from '../components/LoadingSpinner'
-import EmptyState from '../components/EmptyState'
 import ErrorMessage from '../components/ErrorMessage'
 import ProductCard from '../components/ProductCard'
 
