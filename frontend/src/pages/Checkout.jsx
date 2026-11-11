@@ -4,15 +4,15 @@ import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/formatCurrency'
 import { createOrder, generateIdempotencyKey } from '../services/orderService'
-import EmptyState from '../components/EmptyState'
+import { getAddresses } from '../services/addressService'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const Checkout = () => {
-  const { user, signOut } = useAuth()
-  const { items, clearCart, getCartTotals, validateCart } = useCart()
+  const { user } = useAuth()
+  const { items, getCartTotals, validateCart } = useCart()
   const navigate = useNavigate()
 
-  const { subtotal, shipping, total, itemCount } = getCartTotals()
+  const { subtotal, shipping, total } = getCartTotals()
   const cartIssues = validateCart()
 
   const [formData, setFormData] = useState({
@@ -24,7 +24,10 @@ const Checkout = () => {
     postal_code: ''
   })
   const [paymentMethod, setPaymentMethod] = useState('card')
-  const [loading, setLoading] = useState(false)
+  const [savedAddresses, setSavedAddresses] = useState([])
+  const [selectedAddressId, setSelectedAddressId] = useState(null)
+  const [showAddressForm, setShowAddressForm] = useState(false)
+  const [addressesLoading, setAddressesLoading] = useState(true)
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
 
@@ -41,6 +44,54 @@ const Checkout = () => {
       setError('Please fix cart issues before checkout')
     }
   }, [user, items, cartIssues, navigate])
+
+  useEffect(() => {
+    if (!user) return
+
+    const loadSavedAddresses = async () => {
+      setAddressesLoading(true)
+      try {
+        const addresses = await getAddresses(user.id)
+        setSavedAddresses(addresses)
+
+        if (addresses.length > 0) {
+          const address = addresses.find(item => item.is_default) || addresses[0]
+          setSelectedAddressId(address.id)
+          setFormData({
+            full_name: address.full_name || '',
+            phone: address.phone || '',
+            address_line: [address.address_line1, address.address_line2].filter(Boolean).join(', '),
+            city: address.city || '',
+            state: address.state || '',
+            postal_code: address.postal_code || ''
+          })
+        } else {
+          setShowAddressForm(true)
+        }
+      } catch (err) {
+        setError(err.message || 'Unable to load saved addresses')
+        setShowAddressForm(true)
+      } finally {
+        setAddressesLoading(false)
+      }
+    }
+
+    loadSavedAddresses()
+  }, [user])
+
+  const selectAddress = (address) => {
+    setSelectedAddressId(address.id)
+    setShowAddressForm(false)
+    setFormData({
+      full_name: address.full_name || '',
+      phone: address.phone || '',
+      address_line: [address.address_line1, address.address_line2].filter(Boolean).join(', '),
+      city: address.city || '',
+      state: address.state || '',
+      postal_code: address.postal_code || ''
+    })
+    setError(null)
+  }
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -118,7 +169,33 @@ const Checkout = () => {
           <div className="checkout-form">
             <form onSubmit={handleSubmit} className="checkout-form__inner">
               <h2>Delivery Details</h2>
-              
+
+              {addressesLoading ? (
+                <LoadingSpinner />
+              ) : savedAddresses.length > 0 && !showAddressForm ? (
+                <div className="checkout-addresses">
+                  <div className="checkout-addresses__list">
+                    {savedAddresses.map(address => (
+                      <button
+                        key={address.id}
+                        type="button"
+                        className={`checkout-address-option ${selectedAddressId === address.id ? 'selected' : ''}`}
+                        onClick={() => selectAddress(address)}
+                      >
+                        <strong>{address.label || 'Address'}{address.is_default ? ' · Default' : ''}</strong>
+                        <span>{address.full_name}</span>
+                        <span>{address.address_line1}{address.address_line2 ? `, ${address.address_line2}` : ''}</span>
+                        <span>{address.city}, {address.state} - {address.postal_code}</span>
+                        <span>{address.phone}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <button type="button" className="checkout-change-address" onClick={() => setShowAddressForm(true)}>
+                    Use a different address
+                  </button>
+                </div>
+              ) : (
+                <>
               <div className="form-group">
                 <label htmlFor="full_name" className="form-label">Full Name <span className="text-orange" aria-hidden="true">*</span></label>
                 <input type="text" id="full_name" name="full_name" value={formData.full_name} onChange={handleInputChange} className="form-input" required />
@@ -149,6 +226,8 @@ const Checkout = () => {
                 <label htmlFor="postal_code" className="form-label">Postal Code <span className="text-orange" aria-hidden="true">*</span></label>
                 <input type="text" id="postal_code" name="postal_code" value={formData.postal_code} onChange={handleInputChange} placeholder="e.g. 110001" className="form-input" required />
               </div>
+                </>
+              )}
 
               <h2>Payment Method</h2>
               <div className="payment-methods">

@@ -675,6 +675,14 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .payment-option { display: block; padding: 1rem; border: 1px solid var(--color-gray-light); cursor: pointer; }
 .payment-option.selected { border-color: var(--color-orange); background: var(--color-orange-light); }
 .payment-option__content { display: flex; gap: .75rem; align-items: center; }
+.checkout-addresses { margin-bottom: 1.5rem; }
+.checkout-addresses__list { display: grid; gap: .75rem; }
+.checkout-address-option { display: grid; gap: .2rem; width: 100%; padding: 1rem; border: 1px solid var(--color-gray-light); background: var(--color-white); color: var(--color-charcoal); text-align: left; cursor: pointer; }
+.checkout-address-option:hover,
+.checkout-address-option.selected { border-color: var(--color-orange); background: var(--color-orange-light); }
+.checkout-address-option strong { margin-bottom: .15rem; }
+.checkout-address-option span { color: var(--color-gray); font-size: .9rem; }
+.checkout-change-address { margin-top: .85rem; color: var(--color-blue); font-weight: 600; }
 .checkout-form__submit { width: 100%; margin-top: 1.5rem; }
 
 /* Responsive */
