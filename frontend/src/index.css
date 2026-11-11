@@ -526,7 +526,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .footer__newsletter-form { display: flex; gap: .5rem; margin-top: 1rem; }
 .footer__newsletter-input { min-width: 0; width: 100%; padding: .7rem; border: 1px solid rgba(248,245,239,.3); background: transparent; color: white; }
 .footer__bottom { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid rgba(248,245,239,.15); }
-.footer__copyright, .footer__demo-notice { color: rgba(248,245,239,.55); font-size: .8rem; }
+.footer__copyright { color: rgba(248,245,239,.55); font-size: .8rem; }
 .footer__legal-links { display: flex; flex-wrap: wrap; gap: 1rem; }
 
 /* Forms and common pages */
@@ -683,6 +683,10 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .checkout-address-option strong { margin-bottom: .15rem; }
 .checkout-address-option span { color: var(--color-gray); font-size: .9rem; }
 .checkout-change-address { margin-top: .85rem; color: var(--color-blue); font-weight: 600; }
+.order-success { margin-top: 2rem; padding: 2.5rem; background: var(--color-white); box-shadow: var(--shadow-md); text-align: center; }
+.order-success h2 { margin-bottom: .75rem; }
+.order-success p { color: var(--color-gray); }
+.order-success__actions { display: flex; justify-content: center; gap: .75rem; margin-top: 1.5rem; }
 .checkout-form__submit { width: 100%; margin-top: 1.5rem; }
 
 /* Responsive */

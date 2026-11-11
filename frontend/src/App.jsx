@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import AdminLayout from './layouts/AdminLayout'
 import Home from './pages/Home'
@@ -14,7 +13,6 @@ import Addresses from './pages/Addresses'
 import Wishlist from './pages/Wishlist'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
-import DemoPayment from './pages/DemoPayment'
 import MyOrders from './pages/MyOrders'
 import OrderDetails from './pages/OrderDetails'
 import About from './pages/About'
@@ -57,7 +55,6 @@ const App = () => {
           {/* Protected routes */}
           <Route path="cart" element={<Cart />} />
           <Route path="checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-          <Route path="payment/:orderId" element={<ProtectedRoute><DemoPayment /></ProtectedRoute>} />
           <Route path="my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
           <Route path="orders/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
           

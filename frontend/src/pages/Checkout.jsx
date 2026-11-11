@@ -9,7 +9,7 @@ import LoadingSpinner from '../components/LoadingSpinner'
 
 const Checkout = () => {
   const { user } = useAuth()
-  const { items, getCartTotals, validateCart } = useCart()
+  const { items, clearCart, getCartTotals, validateCart } = useCart()
   const navigate = useNavigate()
 
   const { subtotal, shipping, total } = getCartTotals()
@@ -23,13 +23,13 @@ const Checkout = () => {
     state: '',
     postal_code: ''
   })
-  const [paymentMethod, setPaymentMethod] = useState('card')
   const [savedAddresses, setSavedAddresses] = useState([])
   const [selectedAddressId, setSelectedAddressId] = useState(null)
   const [showAddressForm, setShowAddressForm] = useState(false)
   const [addressesLoading, setAddressesLoading] = useState(true)
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
+  const [orderSuccess, setOrderSuccess] = useState(null)
 
   useEffect(() => {
     if (!user) {
@@ -123,27 +123,19 @@ const Checkout = () => {
         p_shipping_city: formData.city,
         p_shipping_state: formData.state,
         p_shipping_postal_code: formData.postal_code,
-        p_payment_method: paymentMethod,
+        p_payment_method: 'cod',
         p_idempotency_key: idempotencyKey
       })
 
-      if (paymentMethod === 'cod') {
-        navigate(`/orders/${data[0].order_id}`)
-      } else {
-        navigate(`/payment/${data[0].order_id}`)
-      }
+      const orderId = data[0].order_id
+      await clearCart()
+      setOrderSuccess(orderId)
     } catch (err) {
       setError(err.message || 'Checkout failed. Please try again.')
     } finally {
       setSubmitting(false)
     }
   }
-  const paymentMethods = [
-    { id: 'card', label: 'Demo Card Payment', description: 'Simulated card payment (no real money charged)', icon: '💳' },
-    { id: 'upi', label: 'Demo UPI Payment', description: 'Simulated UPI payment (no real money charged)', icon: '📱' },
-    { id: 'cod', label: 'Cash on Delivery', description: 'Pay when you receive your order', icon: '🚚' }
-  ]
-
   return (
     <div className="checkout-page">
       <div className="container">
@@ -155,13 +147,20 @@ const Checkout = () => {
           <span>Checkout</span>
         </nav>
 
-        <div className="checkout__warning">
-          <strong>DEMO CHECKOUT — NO REAL MONEY WILL BE CHARGED.</strong>
-          <p>This is a simulated payment system for internship demonstration purposes only.</p>
-        </div>
-
         <h1>Checkout</h1>
         <p>Complete your order details below.</p>
+
+        {orderSuccess ? (
+          <div className="order-success" role="status">
+            <h2>Order Placed Successfully</h2>
+            <p>Thank you for your order. Your order has been saved and is now being processed.</p>
+            <div className="order-success__actions">
+              <Link to={`/orders/${orderSuccess}`} className="btn btn--primary">View Order</Link>
+              <Link to="/my-orders" className="btn btn--outline">My Orders</Link>
+            </div>
+          </div>
+        ) : (
+        <>
 
         {error && <div className="checkout-error" role="alert">{error}</div>}
 
@@ -229,20 +228,15 @@ const Checkout = () => {
                 </>
               )}
 
-              <h2>Payment Method</h2>
-              <div className="payment-methods">
-                {paymentMethods.map(method => (
-                  <label key={method.id} className={`payment-option ${paymentMethod === method.id ? 'selected' : ''}`}>
-                    <input type="radio" name="payment_method" value={method.id} checked={paymentMethod === method.id} onChange={(e) => setPaymentMethod(e.target.value)} className="visually-hidden" />
-                    <div className="payment-option__content">
-                      <span className="payment-option__icon">{method.icon}</span>
-                      <div className="payment-option__info">
-                        <strong>{method.label}</strong>
-                        <p>{method.description}</p>
-                      </div>
-                    </div>
-                  </label>
-                ))}
+              <h2>Payment</h2>
+              <div className="payment-option selected">
+                <div className="payment-option__content">
+                  <span className="payment-option__icon" aria-hidden="true">🚚</span>
+                  <div className="payment-option__info">
+                    <strong>Cash on Delivery</strong>
+                    <p>Pay when your order is delivered.</p>
+                  </div>
+                </div>
               </div>
 
               <button type="submit" className="btn btn--primary btn--large checkout-form__submit" disabled={submitting}>
@@ -285,6 +279,8 @@ const Checkout = () => {
             </div>
           </div>
         </div>
+        </>
+        )}
       </div>
     </div>
   )

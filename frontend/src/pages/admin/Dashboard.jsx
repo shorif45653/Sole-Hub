@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     totalOrders: 0,
     pendingOrders: 0,
     successfulPayments: 0,
-    totalDemoRevenue: 0
+    totalOrderValue: 0
   })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
         supabase.from('orders').select('total_amount').eq('payment_status', 'SUCCESS')
       ])
 
-      const totalDemoRevenue = ordersData?.reduce((sum, order) => sum + Number(order.total_amount), 0) || 0
+      const totalOrderValue = ordersData?.reduce((sum, order) => sum + Number(order.total_amount), 0) || 0
 
       setStats({
         totalProducts: totalProducts || 0,
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
         totalOrders: totalOrders || 0,
         pendingOrders: pendingOrders || 0,
         successfulPayments: successfulPayments || 0,
-        totalDemoRevenue
+        totalOrderValue
       })
     } catch (err) {
       console.error('Dashboard stats error:', err)
@@ -115,11 +115,11 @@ const AdminDashboard = () => {
           </div>
           <div className="stat-card"><CircleDollarSign size={22} />
             <div className="stat-card__value">{stats.successfulPayments}</div>
-            <div className="stat-card__label">Successful Demo Payments</div>
+            <div className="stat-card__label">Successful Payments</div>
           </div>
           <div className="stat-card stat-card--revenue"><CircleDollarSign size={22} />
-            <div className="stat-card__value">{formatCurrency(stats.totalDemoRevenue)}</div>
-            <div className="stat-card__label">Total Demo Order Value</div>
+            <div className="stat-card__value">{formatCurrency(stats.totalOrderValue)}</div>
+            <div className="stat-card__label">Total Order Value</div>
           </div>
         </div>
 

@@ -110,9 +110,6 @@ const Footer = () => {
             <p className="footer__copyright">
               &copy; {currentYear} SoleHub. All rights reserved.
             </p>
-            <p className="footer__demo-notice">
-              This is a demo project for internship demonstration purposes.
-            </p>
           </div>
           <nav className="footer__legal-links" aria-label="Legal">
             {footerLinks.legal.map(link => (

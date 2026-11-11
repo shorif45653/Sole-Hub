@@ -122,36 +122,6 @@ export const getAllOrders = async (filters = {}) => {
   return { data: data || [], count }
 }
 
-// Process demo payment
-export const processDemoPayment = async (paymentData) => {
-  const { data, error } = await supabase
-    .rpc('process_demo_payment', paymentData)
-  
-  if (error) throw error
-  return data
-}
-
-// Get payment for order
-export const getPaymentByOrderId = async (orderId) => {
-  const { data, error } = await supabase
-    .from('payments')
-    .select('*')
-    .eq('order_id', orderId)
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .single()
-  
-  if (error && error.code !== 'PGRST116') throw error
-  return data
-}
-
-// Generate unique transaction reference
-export const generateTransactionRef = () => {
-  const timestamp = Date.now().toString(36).toUpperCase()
-  const random = Math.random().toString(36).substring(2, 8).toUpperCase()
-  return `SH-${timestamp}-${random}`
-}
-
 import { generateUUID } from '../utils/validation'
 
 // Generate idempotency key
