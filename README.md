@@ -59,6 +59,18 @@ In Supabase Dashboard > SQL Editor, run in order:
 3. `supabase/migrations/003_database_functions.sql`
 4. `supabase/migrations/004_seed_data.sql`
 
+If the project already exists, also run the latest migrations:
+5. `supabase/migrations/005_product_images_and_admin_read.sql`
+6. `supabase/migrations/006_user_addresses.sql`
+7. `supabase/migrations/007_admin_profiles_read.sql`
+8. `supabase/migrations/008_secure_create_order.sql`
+9. `supabase/migrations/009_admin_orders_access.sql`
+10. `supabase/migrations/010_cancel_order.sql`
+11. `supabase/migrations/011_reload_cancel_order_rpc.sql`
+12. `supabase/migrations/012_fix_cancel_order_rpc.sql`
+
+The last migration is required for the **Cancel** button. After running it, refresh the website. Do not skip it: frontend code cannot create the PostgreSQL RPC automatically.
+
 ### 4. Create First Admin
 1. Register at `/register`
 2. In Supabase Table Editor > profiles, change your `role` to `admin`

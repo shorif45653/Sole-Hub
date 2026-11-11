@@ -96,7 +96,14 @@ export const cancelOrder = async (orderId) => {
     p_order_id: orderId
   })
 
-  if (error) throw error
+  if (error) {
+    if (error.code === 'PGRST202' || error.message?.includes('Could not find the function')) {
+      throw new Error('Order cancellation is not enabled in Supabase yet. Run supabase/migrations/012_fix_cancel_order_rpc.sql in the Supabase SQL Editor, then try again.')
+    }
+
+    throw error
+  }
+
   return data
 }
 
