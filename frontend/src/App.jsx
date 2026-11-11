@@ -27,12 +27,15 @@ import AdminUsers from './pages/admin/Users'
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
-const App = () => {
-  return (
-    <AuthProvider>
-      <CartProvider>
-        <WishlistProvider>
-          <Routes>
+import { useAuth } from './context/AuthContext'
+import BackButton from './components/BackButton'
+
+const AppContent = () => {
+  const { user, loading } = useAuth()
+
+  return <>
+    {!loading && user && <BackButton className="back-button--global" />}
+    <Routes>
           {/* Public routes */}
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
@@ -70,7 +73,16 @@ const App = () => {
           </Route>
           
           <Route path="*" element={<NotFound />} />
-          </Routes>
+    </Routes>
+  </>
+}
+
+const App = () => {
+  return (
+    <AuthProvider>
+      <CartProvider>
+        <WishlistProvider>
+          <AppContent />
         </WishlistProvider>
       </CartProvider>
     </AuthProvider>

@@ -66,8 +66,7 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 @media (min-width: 768px) { .section { padding: var(--space-4xl) 0; } }
 .back-button { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem .6rem; color: var(--color-gray); border: 1px solid var(--color-gray-light); border-radius: var(--radius-sm); background: var(--color-white); font-size: .82rem; font-weight: 600; transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast); }
 .back-button:hover { color: var(--color-charcoal); border-color: var(--color-orange); background: var(--color-orange-light); }
-.back-button--main { position: absolute; top: 1rem; left: max(1rem, calc((100vw - var(--container-max)) / 2 + 1.5rem)); z-index: 10; }
-.back-button--admin { margin: 0 0 1rem; }
+.back-button--global { position: fixed; top: 1rem; left: max(1rem, calc((100vw - var(--container-max)) / 2 + 1.5rem)); z-index: 1000; }
 .main-layout__content { position: relative; }
 /* ========================================
    SOLEHUB â€” DESIGN SYSTEM (Part 2: Utilities)

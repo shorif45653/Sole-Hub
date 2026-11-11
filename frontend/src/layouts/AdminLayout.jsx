@@ -2,7 +2,6 @@ import { Outlet, Link, NavLink, Navigate, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { Menu, X, LayoutDashboard, ShoppingBag, Users, Package, LogOut, ArrowUpRight } from 'lucide-react'
-import BackButton from '../components/BackButton'
 
 const AdminLayout = () => {
   const { user, signOut, isAdmin, profile, loading } = useAuth()
@@ -79,7 +78,6 @@ const AdminLayout = () => {
         </header>
 
         <main className="admin-layout__content">
-          <BackButton className="back-button--admin" />
           <Outlet />
         </main>
       </div>
