@@ -6,6 +6,7 @@ import { formatCurrency } from '../utils/formatCurrency'
 import { createOrder, generateIdempotencyKey } from '../services/orderService'
 import { getAddresses } from '../services/addressService'
 import LoadingSpinner from '../components/LoadingSpinner'
+import ToastNotification from '../components/ToastNotification'
 
 const Checkout = () => {
   const { user } = useAuth()
@@ -31,6 +32,7 @@ const Checkout = () => {
   const [submitting, setSubmitting] = useState(false)
   const [orderSuccess, setOrderSuccess] = useState(null)
   const [paymentMethod, setPaymentMethod] = useState('cod')
+  const [toast, setToast] = useState(null)
 
   useEffect(() => {
     if (!user) {
@@ -131,6 +133,8 @@ const Checkout = () => {
       const orderId = data[0].order_id
       await clearCart()
       setOrderSuccess(orderId)
+      setToast({ message: 'Order placed successfully', type: 'success' })
+      window.setTimeout(() => setToast(null), 3500)
     } catch (err) {
       setError(err.message || 'Checkout failed. Please try again.')
     } finally {
@@ -139,6 +143,7 @@ const Checkout = () => {
   }
   return (
     <div className="checkout-page">
+      <ToastNotification message={toast?.message} type={toast?.type} />
       <div className="container">
         <nav className="breadcrumbs" aria-label="Breadcrumb">
           <Link to="/">Home</Link>

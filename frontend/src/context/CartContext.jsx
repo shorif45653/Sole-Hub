@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { supabase } from '../services/supabase'
 import { useAuth } from './AuthContext'
+import ToastNotification from '../components/ToastNotification'
 
 const CartContext = createContext(null)
 const GUEST_CART_KEY = 'solehub_guest_cart'
@@ -10,6 +11,12 @@ export const CartProvider = ({ children }) => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [toast, setToast] = useState(null)
+
+  const showToast = useCallback((message, type = 'success') => {
+    setToast({ message, type })
+    window.setTimeout(() => setToast(null), 3000)
+  }, [])
 
   // Fetch cart from database (for authenticated users)
   const fetchCart = useCallback(async () => {
@@ -68,6 +75,7 @@ export const CartProvider = ({ children }) => {
           }]
       window.localStorage.setItem(GUEST_CART_KEY, JSON.stringify(guestItems))
       setItems(guestItems)
+      showToast('Added to cart successfully')
       return { success: true }
     }
 
@@ -102,6 +110,7 @@ export const CartProvider = ({ children }) => {
       }
 
       await fetchCart()
+      showToast('Added to cart successfully')
       return { success: true }
     } catch (err) {
       console.error('Add to cart error:', err)
@@ -237,6 +246,7 @@ export const CartProvider = ({ children }) => {
   return (
     <CartContext.Provider value={value}>
       {children}
+      <ToastNotification message={toast?.message} type={toast?.type} />
     </CartContext.Provider>
   )
 }
