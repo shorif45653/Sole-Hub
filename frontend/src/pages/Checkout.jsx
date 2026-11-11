@@ -30,6 +30,7 @@ const Checkout = () => {
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
   const [orderSuccess, setOrderSuccess] = useState(null)
+  const [paymentMethod, setPaymentMethod] = useState('cod')
 
   useEffect(() => {
     if (!user) {
@@ -123,7 +124,7 @@ const Checkout = () => {
         p_shipping_city: formData.city,
         p_shipping_state: formData.state,
         p_shipping_postal_code: formData.postal_code,
-        p_payment_method: 'cod',
+        p_payment_method: paymentMethod,
         p_idempotency_key: idempotencyKey
       })
 
@@ -229,14 +230,30 @@ const Checkout = () => {
               )}
 
               <h2>Payment</h2>
-              <div className="payment-option selected">
-                <div className="payment-option__content">
-                  <span className="payment-option__icon" aria-hidden="true">🚚</span>
-                  <div className="payment-option__info">
-                    <strong>Cash on Delivery</strong>
-                    <p>Pay when your order is delivered.</p>
-                  </div>
-                </div>
+              <div className="payment-methods">
+                {[
+                  { id: 'card', label: 'Card', description: 'Test card payment option.', icon: '💳' },
+                  { id: 'upi', label: 'UPI', description: 'Test UPI payment option.', icon: '📱' },
+                  { id: 'cod', label: 'Cash on Delivery', description: 'Pay when your order is delivered.', icon: '🚚' }
+                ].map(method => (
+                  <label key={method.id} className={`payment-option ${paymentMethod === method.id ? 'selected' : ''}`}>
+                    <input
+                      type="radio"
+                      name="payment_method"
+                      value={method.id}
+                      checked={paymentMethod === method.id}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="visually-hidden"
+                    />
+                    <div className="payment-option__content">
+                      <span className="payment-option__icon" aria-hidden="true">{method.icon}</span>
+                      <div className="payment-option__info">
+                        <strong>{method.label}</strong>
+                        <p>{method.description}</p>
+                      </div>
+                    </div>
+                  </label>
+                ))}
               </div>
 
               <button type="submit" className="btn btn--primary btn--large checkout-form__submit" disabled={submitting}>
