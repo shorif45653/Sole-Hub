@@ -77,7 +77,8 @@ const MyOrders = () => {
       window.setTimeout(() => setToast(null), 3500)
       await loadOrders()
     } catch (err) {
-      setError(err.message || 'Failed to cancel order')
+      setToast({ message: err.message || 'Failed to cancel order', type: 'error' })
+      window.setTimeout(() => setToast(null), 5000)
     } finally {
       setCancellingId(null)
     }

@@ -706,6 +706,8 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .order-success__actions { display: flex; justify-content: center; gap: .75rem; margin-top: 1.5rem; }
 .toast-notification { position: fixed; z-index: 100; top: 1.25rem; right: 1.25rem; display: flex; align-items: center; gap: .65rem; min-width: 280px; max-width: min(420px, calc(100vw - 2rem)); padding: .9rem 1.1rem; border-radius: 6px; color: #166534; background: #dcfce7; border: 1px solid #86efac; box-shadow: var(--shadow-md); font-weight: 700; }
 .toast-notification__icon { display: grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 50%; color: white; background: #16a34a; font-size: .85rem; }
+.toast-notification--error { color: #991b1b; background: #fee2e2; border-color: #fca5a5; }
+.toast-notification--error .toast-notification__icon { background: #dc2626; }
 .orders-table-wrapper { width: 100%; margin-top: 2rem; overflow-x: auto; border: 1px solid var(--color-gray-light); background: var(--color-white); box-shadow: var(--shadow-sm); }
 .orders-table { width: 100%; min-width: 760px; border-collapse: collapse; text-align: left; }
 .orders-table th { padding: 1rem 1.25rem; border-bottom: 2px solid var(--color-gray-light); background: #fafafa; color: var(--color-gray); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }

@@ -3,7 +3,7 @@ const ToastNotification = ({ message, type = 'success' }) => {
 
   return (
     <div className={`toast-notification toast-notification--${type}`} role="status" aria-live="polite">
-      <span className="toast-notification__icon" aria-hidden="true">✓</span>
+      <span className="toast-notification__icon" aria-hidden="true">{type === 'error' ? '!' : '✓'}</span>
       <span>{message}</span>
     </div>
   )
