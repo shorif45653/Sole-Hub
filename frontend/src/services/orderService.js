@@ -90,6 +90,16 @@ export const updateOrderStatus = async (orderId, status) => {
   return data
 }
 
+// Cancel a customer's order before it is confirmed
+export const cancelOrder = async (orderId) => {
+  const { data, error } = await supabase.rpc('cancel_order', {
+    p_order_id: orderId
+  })
+
+  if (error) throw error
+  return data
+}
+
 // Get all orders (admin)
 export const getAllOrders = async (filters = {}) => {
   let query = supabase

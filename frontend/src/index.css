@@ -718,6 +718,8 @@ h4 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
 .orders-table .order-status.shipped { color: #7e22ce; background: #f3e8ff; }
 .orders-table .order-status.delivered { color: #166534; background: #dcfce7; }
 .orders-table .order-status.cancelled { color: #991b1b; background: #fee2e2; }
+.order-cancel-button { margin-right: .5rem; color: #b42318; border-color: #fca5a5; }
+.order-cancel-button:hover { color: white; background: #dc2626; border-color: #dc2626; }
 .checkout-form__submit { width: 100%; margin-top: 1.75rem; }
 
 /* Responsive */
